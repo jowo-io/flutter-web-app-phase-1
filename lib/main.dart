@@ -44,6 +44,11 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void removeFavorite(str) {
+    favorites.removeWhere((item) => item == str);
+    notifyListeners();
+  }
 }
 
 class BigCard extends StatelessWidget {
@@ -91,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritePage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -177,4 +182,77 @@ class GeneratorPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class FavoritePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    if (appState.favorites.isEmpty) {
+      return Center(
+        child: Text('No favorites yet.'),
+      );
+    }
+
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text('You have '
+              '${appState.favorites.length} favorites:'),
+        ),
+        for (var pair in appState.favorites)
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(pair.asLowerCase),
+            trailing: IconButton(
+              onPressed: () {
+                showRemoveDialog(
+                  context,
+                  () => appState.removeFavorite(pair),
+                );
+              },
+              icon: Icon(Icons.close),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+showRemoveDialog(BuildContext context, onContinue) {
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("Cancel"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("Continue"),
+    onPressed: () {
+      Navigator.of(context).pop();
+      onContinue();
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("AlertDialog"),
+    content:
+        Text("Would you like to continue learning how to use Flutter alerts?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
