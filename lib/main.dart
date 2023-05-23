@@ -19,17 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+      theme: ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.dark().copyWith(
+          primary: Color(0xffffe6a4),
+          secondary: Color(0xffC1C2C5),
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xff1A1B1E),
+        ),
+        scaffoldBackgroundColor: Color(0xff1A1B1E),
       ),
       home: MyHomePage(title: 'Home Page'),
       routes: {
@@ -119,7 +117,38 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ), // This trailing comma makes auto-formatting nicer for build methods.
+
+      bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: true,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.wifi),
+            label: 'Podcasts',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.electric_bolt),
+            label: 'Wallet',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Podcasts',
+          ),
+        ],
+        // currentIndex: _selectedIndex,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Theme.of(context).colorScheme.secondary,
+        // onTap: // do something
+      ),
     );
   }
 }
