@@ -29,16 +29,24 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Color(0xff1A1B1E),
       ),
-      home: MyHomePage(title: 'Home Page'),
+      home: MyHomePage(title: 'Home Page', name: 'home'),
       routes: {
-        '/example': (context) => MyHomePage(title: 'Example path'),
+        '/search': (context) =>
+            MyHomePage(title: 'Search page', name: 'search'),
+        '/podcasts': (context) =>
+            MyHomePage(title: 'Podcasts page', name: 'podcasts'),
+        '/wallet': (context) =>
+            MyHomePage(title: 'Wallet page', name: 'wallet'),
+        '/profile': (context) =>
+            MyHomePage(title: 'Profile page', name: 'profile'),
       },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title, required this.name})
+      : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -50,6 +58,7 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  final String name;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -119,36 +128,94 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavBar(name: widget.name),
+    );
+  }
+}
 
-      bottomNavigationBar: BottomNavigationBar(
-        showUnselectedLabels: true,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.wifi),
-            label: 'Podcasts',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.electric_bolt),
-            label: 'Wallet',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Podcasts',
-          ),
-        ],
-        // currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-        unselectedItemColor: Theme.of(context).colorScheme.secondary,
-        // onTap: // do something
-      ),
+class BottomNavBar extends StatefulWidget {
+  BottomNavBar({Key? key, required this.name}) : super(key: key);
+  final String name;
+  @override
+  _BottomNavBarState createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    switch (widget.name) {
+      case 'home':
+        _selectedIndex = 0;
+        break;
+      case 'search':
+        _selectedIndex = 1;
+        break;
+      case 'podcasts':
+        _selectedIndex = 2;
+        break;
+      case 'wallet':
+        _selectedIndex = 3;
+        break;
+      case 'profile':
+        _selectedIndex = 4;
+        break;
+    }
+  }
+
+  void _onItemTapped(int index) {
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, "/");
+        break;
+      case 1:
+        Navigator.pushNamed(context, "/search");
+        break;
+      case 2:
+        Navigator.pushNamed(context, "/podcasts");
+        break;
+      case 3:
+        Navigator.pushNamed(context, "/wallet");
+        break;
+      case 4:
+        Navigator.pushNamed(context, "/profile");
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      showUnselectedLabels: true,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.wifi),
+          label: 'Podcasts',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.electric_bolt),
+          label: 'Wallet',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
+        ),
+      ],
+      selectedItemColor: Theme.of(context).colorScheme.primary,
+      unselectedItemColor: Theme.of(context).colorScheme.secondary,
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
     );
   }
 }
