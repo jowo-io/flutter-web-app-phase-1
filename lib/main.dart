@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import './screens/home.dart';
 import './screens/podcasts.dart';
 import './screens/generic.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  setPathUrlStrategy();
+  runApp(MyApp());
+}
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
