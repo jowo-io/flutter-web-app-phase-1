@@ -1,134 +1,134 @@
+// Copyright 2013 The Flutter Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
-import 'package:url_strategy/url_strategy.dart';
+import 'package:go_router/go_router.dart';
 
-void main() {
-  // Here we set the URL strategy for our web app.
-  // It is safe to call this function when running on mobile or desktop as well.
-  setPathUrlStrategy();
-  runApp(MyApp());
-}
+/// This sample app shows an app with two screens.
+///
+/// The first route '/' is mapped to [HomeScreen], and the second route
+/// '/search' is mapped to [SearchScreen].
+///
+/// The buttons use context.go() to navigate to each destination. On mobile
+/// devices, each destination is deep-linkable and on the web, can be navigated
+/// to using the address bar.
+void main() => runApp(const MyApp());
 
-/// The example `main.dart` file below contains an almost unmodified Flutter
-/// counter starter app that is generated with the app template.
-/// We only pass `example/path` as the initial route to demonstrate the URL
-/// strategy.
+/// The route configuration.
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const HomeScreen();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'search',
+          builder: (BuildContext context, GoRouterState state) {
+            return const GenericScreen(name: "search");
+          },
+        ),
+        GoRoute(
+          path: 'podcasts',
+          builder: (BuildContext context, GoRouterState state) {
+            return const GenericScreen(name: "podcasts");
+          },
+        ),
+        GoRoute(
+          path: 'wallet',
+          builder: (BuildContext context, GoRouterState state) {
+            return const GenericScreen(name: "wallet");
+          },
+        ),
+        GoRoute(
+          path: 'profile',
+          builder: (BuildContext context, GoRouterState state) {
+            return const GenericScreen(name: "profile");
+          },
+        ),
+      ],
+    ),
+  ],
+);
 
+/// The main app.
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  /// Constructs a [MyApp]
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.dark().copyWith(
+    return MaterialApp.router(
+      theme: ThemeData.from(
         colorScheme: ColorScheme.dark().copyWith(
           primary: Color(0xffffe6a4),
           secondary: Color(0xffC1C2C5),
         ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xff1A1B1E),
-        ),
-        scaffoldBackgroundColor: Color(0xff1A1B1E),
       ),
-      home: MyHomePage(title: 'Home Page', name: 'home'),
-      routes: {
-        '/search': (context) =>
-            MyHomePage(title: 'Search page', name: 'search'),
-        '/podcasts': (context) =>
-            MyHomePage(title: 'Podcasts page', name: 'podcasts'),
-        '/wallet': (context) =>
-            MyHomePage(title: 'Wallet page', name: 'wallet'),
-        '/profile': (context) =>
-            MyHomePage(title: 'Profile page', name: 'profile'),
-      },
+      routerConfig: _router,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title, required this.name})
-      : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-  final String name;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+/// The home screen
+class HomeScreen extends StatelessWidget {
+  /// Constructs a [HomeScreen]
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: const Text('Home Screen')),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            ElevatedButton(
+              onPressed: () => context.go('/search'),
+              child: const Text('Go to the Search screen'),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            ElevatedButton(
+              onPressed: () => context.go('/podcasts'),
+              child: const Text('Go to the Podcasts screen'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.go('/wallet'),
+              child: const Text('Go to the Wallet screen'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.go('/profile'),
+              child: const Text('Go to the Profile screen'),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-      bottomNavigationBar: BottomNavBar(name: widget.name),
+      bottomNavigationBar: BottomNavBar(name: "home"),
+    );
+  }
+}
+
+class GenericScreen extends StatelessWidget {
+  const GenericScreen({super.key, required this.name});
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(name)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <ElevatedButton>[
+            ElevatedButton(
+              onPressed: () => context.go('/'),
+              child: const Text('Go back to the Home screen'),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavBar(name: name),
     );
   }
 }
@@ -136,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({Key? key, required this.name}) : super(key: key);
   final String name;
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
@@ -168,19 +169,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
   void _onItemTapped(int index) {
     switch (index) {
       case 0:
-        Navigator.pushNamed(context, "/");
+        context.go('/');
         break;
       case 1:
-        Navigator.pushNamed(context, "/search");
+        context.go('/search');
         break;
       case 2:
-        Navigator.pushNamed(context, "/podcasts");
+        context.go("/podcasts");
         break;
       case 3:
-        Navigator.pushNamed(context, "/wallet");
+        context.go("/wallet");
         break;
       case 4:
-        Navigator.pushNamed(context, "/profile");
+        context.go("/profile");
         break;
     }
   }

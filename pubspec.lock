@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.1"
-  english_words:
-    dependency: "direct main"
-    description:
-      name: english_words
-      sha256: "6a7ef6473a97bd8571b6b641d006a6e58a7c67e65fb6f3d6d1151cb46b0e983c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -80,6 +72,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: "00d1b67d6e9fa443331da229084dd3eb04407f5a2dff22940bd7bba6af5722c3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.1.1"
   js:
     dependency: transitive
     description:
@@ -96,6 +96,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   matcher:
     dependency: transitive
     description:
@@ -197,14 +205,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-  url_strategy:
-    dependency: "direct main"
-    description:
-      name: url_strategy
-      sha256: "42b68b42a9864c4d710401add17ad06e28f1c1d5500c93b98c431f6b0ea4ab87"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
   vector_math:
     dependency: transitive
     description:
@@ -215,4 +215,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=3.0.0-417 <4.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=3.3.0"
