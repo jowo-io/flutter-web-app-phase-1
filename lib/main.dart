@@ -33,7 +33,7 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'podcasts',
           builder: (BuildContext context, GoRouterState state) {
-            return const GenericScreen(name: "podcasts");
+            return const PodcastsScreen();
           },
         ),
         GoRoute(
@@ -47,6 +47,13 @@ final GoRouter _router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const GenericScreen(name: "profile");
           },
+        ),
+        GoRoute(
+          path: 'podcasts/:showId',
+          builder: (context, state) => GenericScreen(
+            name: 'podcasts',
+            id: state.pathParameters["showId"]!,
+          ),
         ),
       ],
     ),
@@ -89,14 +96,17 @@ class HomeScreen extends StatelessWidget {
               onPressed: () => context.go('/search'),
               child: const Text('Go to the Search screen'),
             ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => context.go('/podcasts'),
               child: const Text('Go to the Podcasts screen'),
             ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => context.go('/wallet'),
               child: const Text('Go to the Wallet screen'),
             ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => context.go('/profile'),
               child: const Text('Go to the Profile screen'),
@@ -109,9 +119,76 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+class PodcastsScreen extends StatelessWidget {
+  const PodcastsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("podcasts")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(height: 10),
+            const CardExample(title: "foo", subtitle: "foo bar", id: "foo"),
+            const SizedBox(height: 10),
+            const CardExample(
+                title: "hello", subtitle: "hello world", id: "hello"),
+            const SizedBox(height: 10),
+            const CardExample(
+                title: "lorem", subtitle: "lorem ipsum", id: "lorem"),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavBar(name: "podcasts"),
+    );
+  }
+}
+
+class CardExample extends StatelessWidget {
+  const CardExample(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      required this.id});
+  final String title;
+  final String subtitle;
+  final String id;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.album),
+              title: Text(title),
+              subtitle: Text(subtitle),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: const Text('LISTEN'),
+                  onPressed: () => context.go('/podcasts/$id'),
+                ),
+                const SizedBox(width: 8),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class GenericScreen extends StatelessWidget {
-  const GenericScreen({super.key, required this.name});
+  const GenericScreen({super.key, required this.name, this.id});
   final String name;
+  final String? id;
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +197,8 @@ class GenericScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <ElevatedButton>[
-            ElevatedButton(
-              onPressed: () => context.go('/'),
-              child: const Text('Go back to the Home screen'),
-            ),
+          children: <Widget>[
+            Text(id != null ? '$name $id' : (name)),
           ],
         ),
       ),
