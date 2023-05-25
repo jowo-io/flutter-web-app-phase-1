@@ -16,40 +16,47 @@ final GoRouter _router = GoRouter(
   initialLocation: "/search",
   routes: <RouteBase>[
     GoRoute(
+      name: 'home',
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const HomeScreen();
       },
     ),
     GoRoute(
+      name: 'search',
       path: '/search',
       builder: (BuildContext context, GoRouterState state) {
         return const GenericScreen(name: "search");
       },
     ),
     GoRoute(
+      name: 'podcasts',
       path: '/podcasts',
       builder: (BuildContext context, GoRouterState state) {
         return const PodcastsScreen();
       },
     ),
     GoRoute(
+      name: 'wallet',
       path: '/wallet',
       builder: (BuildContext context, GoRouterState state) {
         return const GenericScreen(name: "wallet");
       },
     ),
     GoRoute(
+      name: 'profile',
       path: '/profile',
       builder: (BuildContext context, GoRouterState state) {
         return const GenericScreen(name: "profile");
       },
     ),
     GoRoute(
+      name: 'podcasts-show',
       path: '/podcasts/:showId',
       builder: (context, state) => GenericScreen(
         name: 'podcasts',
         id: state.pathParameters["showId"]!,
+        back: "/podcasts",
       ),
     ),
   ],

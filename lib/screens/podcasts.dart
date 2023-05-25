@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/card.dart';
 import '../widgets/navbar.dart';
@@ -14,7 +15,13 @@ class PodcastsScreen extends StatelessWidget {
       title: name,
       color: Colors.redAccent,
       child: Scaffold(
-        appBar: AppBar(title: Text(name)),
+        appBar: AppBar(
+          title: Text(name),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => context.go('/'),
+          ),
+        ),
         body: Row(
           children: [
             if (MediaQuery.of(context).size.width >= 640)

@@ -14,7 +14,9 @@ class HomeScreen extends StatelessWidget {
       title: name,
       color: Colors.redAccent,
       child: Scaffold(
-        appBar: AppBar(title: Text(name)),
+        appBar: AppBar(
+          title: Text(name),
+        ),
         body: Row(
           children: [
             if (MediaQuery.of(context).size.width >= 640)
