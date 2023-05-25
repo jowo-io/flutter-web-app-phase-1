@@ -68,6 +68,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.dark().copyWith(
           primary: Color(0xffffe6a4),
           secondary: Color(0xffC1C2C5),
+          onBackground: Color(0xff282828),
         ),
       ),
       routerConfig: _router,

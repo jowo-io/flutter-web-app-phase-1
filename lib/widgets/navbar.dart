@@ -123,13 +123,7 @@ class _SideNavBarState extends State<SideNavBar> {
       unselectedLabelTextStyle: TextStyle(
         color: Theme.of(context).colorScheme.secondary,
       ),
-      leading: Column(
-        children: const [
-          SizedBox(
-            height: 8,
-          ),
-        ],
-      ),
+      backgroundColor: Theme.of(context).colorScheme.onBackground,
     );
   }
 }
