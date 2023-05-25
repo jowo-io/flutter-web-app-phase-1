@@ -39,9 +39,30 @@
     </script>
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer></script>
+
+    <!-- preloader styles -->
+    <style>
+      #preloader {
+        width: 100vw;
+        height: 100vh;
+        display: flex; /* Default Axis is X*/
+        justify-content: center; /* Main Axis */
+        align-items: center; /* Cross Axis */
+      }
+      .preloader img {
+        width: 50vw;
+      }
+    </style>
   </head>
   <body>
+    <div id="preloader"><img src="/assets/preloader.gif" /></div>
+
     <script>
+      function removePreloader() {
+        var element = document.getElementById("preloader");
+        element.parentNode.removeChild(element);
+      }
+
       window.addEventListener("load", function (ev) {
         // Download main.dart.js
         _flutter.loader.loadEntrypoint({
@@ -51,6 +72,7 @@
           onEntrypointLoaded: function (engineInitializer) {
             engineInitializer.initializeEngine().then(function (appRunner) {
               appRunner.runApp();
+              removePreloader();
             });
           },
         });
