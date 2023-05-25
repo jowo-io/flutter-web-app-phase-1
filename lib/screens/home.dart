@@ -10,43 +10,49 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home Screen')),
-      body: Row(
-        children: [
-          if (MediaQuery.of(context).size.width >= 640) SideNavBar(name: name),
-          Expanded(
+    return Title(
+      title: name,
+      color: Colors.redAccent,
+      child: Scaffold(
+        appBar: AppBar(title: Text(name)),
+        body: Row(
+          children: [
+            if (MediaQuery.of(context).size.width >= 640)
+              SideNavBar(name: name),
+            Expanded(
               child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () => context.go('/search'),
-                  child: const Text('Go to the Search screen'),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: () => context.go('/search'),
+                      child: const Text('Go to the Search screen'),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () => context.go('/podcasts'),
+                      child: const Text('Go to the Podcasts screen'),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () => context.go('/wallet'),
+                      child: const Text('Go to the Wallet screen'),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () => context.go('/profile'),
+                      child: const Text('Go to the Profile screen'),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () => context.go('/podcasts'),
-                  child: const Text('Go to the Podcasts screen'),
-                ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () => context.go('/wallet'),
-                  child: const Text('Go to the Wallet screen'),
-                ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () => context.go('/profile'),
-                  child: const Text('Go to the Profile screen'),
-                ),
-              ],
+              ),
             ),
-          ))
-        ],
+          ],
+        ),
+        bottomNavigationBar: MediaQuery.of(context).size.width < 640
+            ? BottomNavBar(name: name)
+            : null,
       ),
-      bottomNavigationBar: MediaQuery.of(context).size.width < 640
-          ? BottomNavBar(name: name)
-          : null,
     );
   }
 }

@@ -13,45 +13,44 @@ void main() {
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
+  initialLocation: "/search",
   routes: <RouteBase>[
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const HomeScreen();
       },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'search',
-          builder: (BuildContext context, GoRouterState state) {
-            return const GenericScreen(name: "search");
-          },
-        ),
-        GoRoute(
-          path: 'podcasts',
-          builder: (BuildContext context, GoRouterState state) {
-            return const PodcastsScreen();
-          },
-        ),
-        GoRoute(
-          path: 'wallet',
-          builder: (BuildContext context, GoRouterState state) {
-            return const GenericScreen(name: "wallet");
-          },
-        ),
-        GoRoute(
-          path: 'profile',
-          builder: (BuildContext context, GoRouterState state) {
-            return const GenericScreen(name: "profile");
-          },
-        ),
-        GoRoute(
-          path: 'podcasts/:showId',
-          builder: (context, state) => GenericScreen(
-            name: 'podcasts',
-            id: state.pathParameters["showId"]!,
-          ),
-        ),
-      ],
+    ),
+    GoRoute(
+      path: '/search',
+      builder: (BuildContext context, GoRouterState state) {
+        return const GenericScreen(name: "search");
+      },
+    ),
+    GoRoute(
+      path: '/podcasts',
+      builder: (BuildContext context, GoRouterState state) {
+        return const PodcastsScreen();
+      },
+    ),
+    GoRoute(
+      path: '/wallet',
+      builder: (BuildContext context, GoRouterState state) {
+        return const GenericScreen(name: "wallet");
+      },
+    ),
+    GoRoute(
+      path: '/profile',
+      builder: (BuildContext context, GoRouterState state) {
+        return const GenericScreen(name: "profile");
+      },
+    ),
+    GoRoute(
+      path: '/podcasts/:showId',
+      builder: (context, state) => GenericScreen(
+        name: 'podcasts',
+        id: state.pathParameters["showId"]!,
+      ),
     ),
   ],
 );
